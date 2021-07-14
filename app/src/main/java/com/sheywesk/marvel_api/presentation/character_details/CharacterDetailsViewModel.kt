@@ -10,9 +10,9 @@ class CharacterDetailsViewModel(private val repository: ICharacterRepository) : 
     val character: LiveData<Character>
         get() = _character
 
-    fun finCharacterById( id:Int){
+    fun finCharacterById(id: Int) {
         viewModelScope.launch {
-         val character = repository.findCharacterById(id)
+            val character = repository.findCharacterById(id)
             character.let {
                 _character.postValue(it.data!!)
             }

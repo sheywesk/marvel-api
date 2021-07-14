@@ -13,16 +13,17 @@ class FakeCharacterRepository : ICharacterRepository {
         shouldReturnError = value
     }
 
+    private val characterList = mutableListOf<Character>()
+
+    fun addCharacterToTest(character: Character) {
+        characterList.add(character)
+    }
+
     override suspend fun findCharacterById(id: Int): Resource<Character> {
         return if (shouldReturnError) {
             Resource.error(data = null, msg = "Personagem não encontrado")
         } else {
-            Resource.success(
-                data = Character(
-                    0, "", "",
-                    false, Image("", "")
-                )
-            )
+            Resource.success(characterList.find { it.id == id })
         }
     }
 
@@ -39,6 +40,6 @@ class FakeCharacterRepository : ICharacterRepository {
     }
 
     override suspend fun updateFavorite(character: Character) {
-        TODO("Not yet implemented")
+        characterList.find { it.id == character.id }?.favorite = character.favorite
     }
 }

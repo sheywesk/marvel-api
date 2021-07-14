@@ -30,7 +30,7 @@ class CharacterRepository(
                     /* This check is necessary to not save favorite item
                       because remote object is favorite = false */
                     val localData = localDatasource.findCharacterById(character.id)
-                    if (localData.status== Status.ERROR) {
+                    if (localData.status == Status.ERROR) {
                         localDatasource.saveCharacter(character)
                     }
                 }

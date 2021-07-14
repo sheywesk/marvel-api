@@ -49,7 +49,13 @@ class FakeDataSource(private var characterList: MutableList<Character> = mutable
         characterList.add(character)
     }
 
-    override suspend fun findCharacterById(id: Int): Character? {
-        return characterList.find { return@find it.id == id }
+    override suspend fun findCharacterById(id: Int): Resource<Character> {
+        val character = characterList.find { return@find it.id == id }
+        return if(character != null){
+            Resource.success(character)
+        }else{
+            Resource.error(data = null,msg="Personagem não existe")
+        }
+
     }
 }

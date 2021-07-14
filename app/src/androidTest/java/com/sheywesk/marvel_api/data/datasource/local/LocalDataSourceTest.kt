@@ -52,9 +52,9 @@ class LocalDataSourceTest {
     }
 
     @Test
-    fun updateFavorite() = runBlocking{
+    fun updateFavorite() = runBlocking {
 
-       val character = Character(
+        val character = Character(
             0,
             "teste1", "teste1",
             false, Image("", "")
@@ -64,7 +64,7 @@ class LocalDataSourceTest {
         characterToUpdate.data?.favorite = true
         localDataSource.updateFavorite(characterToUpdate.data!!)
 
-        val expect  = Character(
+        val expect = Character(
             0,
             "teste1", "teste1",
             true, Image("", "")
@@ -74,12 +74,14 @@ class LocalDataSourceTest {
     }
 
     @Test
-    fun localGetAllCharacterSync() = runBlocking{
-        val character = listOf( Character(
-            0,
-            "teste1", "teste1",
-            false, Image("", "")
-        ))
+    fun localGetAllCharacterSync() = runBlocking {
+        val character = listOf(
+            Character(
+                0,
+                "teste1", "teste1",
+                false, Image("", "")
+            )
+        )
         localDataSource.saveCharacter(character.get(0))
         val actual = localDataSource.localGetAllCharacterSync()
         assertThat(character).isEqualTo(actual.data)
