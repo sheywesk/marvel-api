@@ -103,7 +103,7 @@ class CharacterRepositoryTest {
     fun `find character by id,return success`() = runBlockingTest {
         val character = characterLocalDataSource.findCharacterById(3)
         val expect = localCharacter.get(0)
-        assertThat(character).isEqualTo(expect)
+        assertThat(character.data).isEqualTo(expect)
     }
 
     @Test
