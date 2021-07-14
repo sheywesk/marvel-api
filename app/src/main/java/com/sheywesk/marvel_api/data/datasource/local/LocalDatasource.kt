@@ -15,8 +15,13 @@ class LocalDatasource(private val characterDao: CharacterDao, private val contex
         characterDao.save(character)
     }
 
-    override suspend fun findCharacterById(id: Int): Character? {
-        return characterDao.findCharacterById(id)
+    override suspend fun findCharacterById(id: Int): Resource<Character> {
+        val response = characterDao.findCharacterById(id)
+       return if(response == null){
+            Resource.error(data=null,msg = "Personagem não existe")
+        }else{
+         Resource.success(data = response)
+        }
     }
 
     override suspend fun updateFavorite(character: Character) {

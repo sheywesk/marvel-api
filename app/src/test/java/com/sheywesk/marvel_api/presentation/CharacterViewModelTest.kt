@@ -5,6 +5,7 @@ import com.sheywesk.marvel_api.data.repository.FakeCharacterRepository
 import com.sheywesk.marvel_api.presentation.home.CharacterViewModel
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 
 class CharacterViewModelTest {
     private lateinit var characterViewModel: CharacterViewModel
@@ -14,6 +15,11 @@ class CharacterViewModelTest {
     @Before
     fun setUp(){
         characterViewModel = CharacterViewModel(FakeCharacterRepository())
+    }
+
+    fun `request all character,return success`(){
+        val character = characterViewModel.marvelViewModel.value
+
     }
 
 }

@@ -6,26 +6,43 @@ import androidx.lifecycle.map
 import com.sheywesk.marvel_api.data.datasource.local.ILocalDataSource
 import com.sheywesk.marvel_api.data.datasource.remote.IRemoteDataSource
 import com.sheywesk.marvel_api.data.models.Character
+import com.sheywesk.marvel_api.utils.Resource
 
 class FakeDataSource(private var characterList: MutableList<Character> = mutableListOf()) :
     IRemoteDataSource, ILocalDataSource {
     private val observableCharacter = MutableLiveData(characterList)
     private var shouldReturnNetworkStatus = true
-
+    private var shouldReturnLocalStatus = true
     fun setShouldReturnNetworkStatus(value: Boolean) {
         shouldReturnNetworkStatus = value
     }
 
-    override suspend fun remoteGetAllCharacter(): Result<List<Character>> {
+    fun setShouldReturnLocalStatus(value: Boolean) {
+        shouldReturnLocalStatus = value
+    }
+
+    override suspend fun remoteGetAllCharacter(): Resource<List<Character>> {
         return if (shouldReturnNetworkStatus) {
-            Result.success(characterList.toList())
+            Resource.success(characterList.toList())
         } else {
-            Result.failure(Exception("Erro de conexão"))
+            Resource.error(data = null, msg = "Erro de conexão - test")
         }
     }
 
-    override fun localGetAllCharacter(): LiveData<Result<List<Character>>> {
-        return observableCharacter.map { Result.success(it) }
+    override suspend fun updateFavorite(character: Character) {
+        TODO("Not yet implemented")
+    }
+
+    override fun localGetAllCharacter(): LiveData<Resource<List<Character>>> {
+        return if(shouldReturnLocalStatus){
+            observableCharacter.map { Resource.success(it) }
+        }else{
+            observableCharacter.map { Resource.error(data = null,msg = "banco de dados vazio - test") }
+        }
+    }
+
+    override suspend fun localGetAllCharacterSync(): Resource<List<Character>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun saveCharacter(character: Character) {
@@ -33,6 +50,6 @@ class FakeDataSource(private var characterList: MutableList<Character> = mutable
     }
 
     override suspend fun findCharacterById(id: Int): Character? {
-        TODO("Not yet implemented")
+        return characterList.find { return@find it.id == id }
     }
 }

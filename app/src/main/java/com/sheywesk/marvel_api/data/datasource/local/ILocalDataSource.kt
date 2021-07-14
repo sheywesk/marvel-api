@@ -9,5 +9,5 @@ interface ILocalDataSource {
     fun localGetAllCharacter(): LiveData<Resource<List<Character>>>
     suspend fun localGetAllCharacterSync(): Resource<List<Character>>
     suspend fun saveCharacter(character: Character)
-    suspend fun findCharacterById(id: Int): Character?
+    suspend fun findCharacterById(id: Int): Resource<Character>
 }

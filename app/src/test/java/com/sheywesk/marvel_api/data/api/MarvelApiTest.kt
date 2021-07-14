@@ -13,6 +13,7 @@ import com.sheywesk.marvel_api.data.models.Character
 import com.sheywesk.marvel_api.data.models.Image
 
 class MarvelApiTest {
+
     @Test
     fun `should hit endpoints with expected parameters`() = runBlocking {
         val server = MockWebServer()

@@ -18,19 +18,19 @@ class CharacterRepository(
     private val localDatasource: ILocalDataSource,
 ) : ICharacterRepository {
 
-    override suspend fun findCharacterById(id: Int): Character? {
+    override suspend fun findCharacterById(id: Int): Resource<Character> {
         return localDatasource.findCharacterById(id)
     }
 
     override fun getAllCharacter(): LiveData<Resource<List<Character>>> = liveData {
-        emit(Resource.loading(data = null))
         try {
             val response = remoteDatasource.remoteGetAllCharacter()
             if (response.status == Status.SUCCESS) {
                 response.data?.forEach { character ->
                     /* This check is necessary to not save favorite item
                       because remote object is favorite = false */
-                    if (localDatasource.findCharacterById(character.id) == null) {
+                    val localData = localDatasource.findCharacterById(character.id)
+                    if (localData.status== Status.ERROR) {
                         localDatasource.saveCharacter(character)
                     }
                 }

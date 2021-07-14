@@ -13,8 +13,8 @@ class CharacterDetailsViewModel(private val repository: ICharacterRepository) : 
     fun finCharacterById( id:Int){
         viewModelScope.launch {
          val character = repository.findCharacterById(id)
-            character?.let {
-                _character.postValue(it)
+            character.let {
+                _character.postValue(it.data!!)
             }
         }
     }

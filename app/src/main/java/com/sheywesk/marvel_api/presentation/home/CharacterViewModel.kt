@@ -1,5 +1,4 @@
 package com.sheywesk.marvel_api.presentation.home
-
 import androidx.lifecycle.*
 import com.sheywesk.marvel_api.data.models.Character
 import com.sheywesk.marvel_api.data.repository.ICharacterRepository
@@ -8,7 +7,10 @@ import kotlinx.coroutines.launch
 
 class CharacterViewModel(private val repository: ICharacterRepository) : ViewModel() {
     val marvelViewModel: LiveData<Resource<List<Character>>>
-        get() = repository.getAllCharacter()
+        get() = liveData {
+            emit(Resource.loading(data = null))
+            emitSource(repository.getAllCharacter())
+        }
 
     fun updateFavorite(character: Character) {
         // New object is necessary to calculate listAdapter diff
@@ -22,6 +24,7 @@ class CharacterViewModel(private val repository: ICharacterRepository) : ViewMod
         viewModelScope.launch {
             repository.updateFavorite(newCharacter)
         }
-        repository.getAllCharacter()
     }
 }
+
+
