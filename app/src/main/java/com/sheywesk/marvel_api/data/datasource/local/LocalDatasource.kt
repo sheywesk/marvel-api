@@ -9,7 +9,10 @@ import com.sheywesk.marvel_api.R
 import com.sheywesk.marvel_api.data.models.Character
 import com.sheywesk.marvel_api.utils.Resource
 
-class LocalDatasource(private val characterDao: CharacterDao, private val context: Context) :
+class LocalDatasource(
+    private val characterDao: CharacterDao,
+    private val context: Context
+) :
     ILocalDataSource {
     override suspend fun saveCharacter(character: Character) {
         characterDao.save(character)
@@ -17,10 +20,10 @@ class LocalDatasource(private val characterDao: CharacterDao, private val contex
 
     override suspend fun findCharacterById(id: Int): Resource<Character> {
         val response = characterDao.findCharacterById(id)
-       return if(response == null){
-            Resource.error(data=null,msg = "Personagem não existe")
-        }else{
-         Resource.success(data = response)
+        return if (response == null) {
+            Resource.error(data = null, msg = context.getString(R.string.character_dont_exist))
+        } else {
+            Resource.success(data = response)
         }
     }
 
@@ -28,23 +31,23 @@ class LocalDatasource(private val characterDao: CharacterDao, private val contex
         characterDao.updateFavorite(character)
     }
 
-    override fun localGetAllCharacter(): LiveData<Resource<List<Character>>> {
-        return if (characterDao.checkIsNull().value != 0) {
-            characterDao.getAllCharacter().map {
+    override fun localGetAllCharacter(): LiveData<Resource<List<Character>>> = liveData {
+        if (characterDao.checkIsNull() != 0) {
+            val characterList = characterDao.getAllCharacter().map {
                 Resource.success(it)
             }
+            emitSource(characterList)
         } else {
-            MutableLiveData(
-                Resource.error(
-                    data = null,
-                    msg = context.getString(R.string.database_empty)
-                )
+            val characterError = Resource.error(
+                data = null,
+                msg = context.getString(R.string.database_empty)
             )
+            emit(characterError)
         }
     }
 
     override suspend fun localGetAllCharacterSync(): Resource<List<Character>> {
-        return if (characterDao.checkIsNull().value != 0) {
+        return if (characterDao.checkIsNull() != 0) {
             Resource.success(data = characterDao.getAllCharacterSync())
         } else {
             Resource.error(data = null, msg = context.getString(R.string.database_empty))

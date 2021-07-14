@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">marvel-api</string>
+    <string name="app_name">Marvel MVVM</string>
     <string name="title_activity_character_details">CharacterDetailsActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -11,8 +11,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="search_title">Pesquisar</string>
     <string name="title_error_dialog">Ocorreu um erro</string>
-    <string name="database_empty">\"Voĉe precisa se conectar com internet ao menos \"</string>
+    <string name="database_empty">Voĉe precisa se conectar com internet ao menos uma vez</string>
     <string name="unexpected_error">Ocorreu um erro inesperado...tente novamente.</string>
     <string name="no_conection">Sem conexão com a internet</string>
     <string name="positive_button">OK</string>
+    <string name="character_dont_exist">Personagem não existe</string>
 </resources>

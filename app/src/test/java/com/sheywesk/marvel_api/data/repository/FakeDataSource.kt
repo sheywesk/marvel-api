@@ -34,10 +34,15 @@ class FakeDataSource(private var characterList: MutableList<Character> = mutable
     }
 
     override fun localGetAllCharacter(): LiveData<Resource<List<Character>>> {
-        return if(shouldReturnLocalStatus){
+        return if (shouldReturnLocalStatus) {
             observableCharacter.map { Resource.success(it) }
-        }else{
-            observableCharacter.map { Resource.error(data = null,msg = "banco de dados vazio - test") }
+        } else {
+            observableCharacter.map {
+                Resource.error(
+                    data = null,
+                    msg = "banco de dados vazio - test"
+                )
+            }
         }
     }
 
@@ -51,10 +56,10 @@ class FakeDataSource(private var characterList: MutableList<Character> = mutable
 
     override suspend fun findCharacterById(id: Int): Resource<Character> {
         val character = characterList.find { return@find it.id == id }
-        return if(character != null){
+        return if (character != null) {
             Resource.success(character)
-        }else{
-            Resource.error(data = null,msg="Personagem não existe")
+        } else {
+            Resource.error(data = null, msg = "Personagem não existe")
         }
 
     }

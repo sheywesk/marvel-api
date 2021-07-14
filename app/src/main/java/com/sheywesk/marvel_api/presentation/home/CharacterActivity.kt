@@ -13,7 +13,7 @@ import androidx.fragment.app.commit
 import com.sheywesk.marvel_api.R
 import com.sheywesk.marvel_api.databinding.ActivityMainBinding
 
-class CharacterActivity : AppCompatActivity(),NavigationHost {
+class CharacterActivity : AppCompatActivity(), NavigationHost {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -24,19 +24,19 @@ class CharacterActivity : AppCompatActivity(),NavigationHost {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         if (savedInstanceState == null) {
-            navigationTo(CharacterListFragment.newInstance(),false)
+            navigationTo(CharacterListFragment.newInstance(), false)
         }
     }
 
-    fun progressBar(isVisible:Boolean){
+    fun progressBar(isVisible: Boolean) {
         binding.progressCircular.isVisible = isVisible
     }
 
     override fun navigationTo(fragment: Fragment, addBackStack: Boolean) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            replace(R.id.character_list_fragment,fragment)
-            if(addBackStack){
+            replace(R.id.character_list_fragment, fragment)
+            if (addBackStack) {
                 addToBackStack(null)
             }
         }

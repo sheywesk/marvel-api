@@ -1,26 +1,26 @@
 package com.sheywesk.marvel_api.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import com.sheywesk.marvel_api.data.models.Character
 import com.sheywesk.marvel_api.data.models.Image
 import com.sheywesk.marvel_api.data.repository.FakeCharacterRepository
+import com.sheywesk.marvel_api.presentation.character_details.CharacterDetailsViewModel
 import com.sheywesk.marvel_api.presentation.home.CharacterViewModel
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-
-class CharacterViewModelTest {
-    private lateinit var characterViewModel: CharacterViewModel
+class CharacterDetailsViewModelTest {
+    private lateinit var characterDetailsViewModel:CharacterDetailsViewModel
     private lateinit var repository: FakeCharacterRepository
 
     @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
-    fun setup() {
+    fun setup(){
         repository = FakeCharacterRepository()
         val character = Character(
             0, "test1",
@@ -29,7 +29,7 @@ class CharacterViewModelTest {
             Image("teste1", "teste1")
         )
         repository.addCharacterToTest(character)
-        characterViewModel = CharacterViewModel(FakeCharacterRepository())
+        characterDetailsViewModel = CharacterDetailsViewModel(FakeCharacterRepository())
     }
 
     @Test
@@ -43,7 +43,6 @@ class CharacterViewModelTest {
             "test1",
             true,
             Image("teste1", "teste1"))
-        assertThat(expect).isEqualTo(character.data)
+        Truth.assertThat(expect).isEqualTo(character.data)
     }
-
 }

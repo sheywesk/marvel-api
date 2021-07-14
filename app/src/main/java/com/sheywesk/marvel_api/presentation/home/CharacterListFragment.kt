@@ -73,18 +73,15 @@ class CharacterListFragment : Fragment() {
             it?.let {
                 when (it.status) {
                     Status.LOADING -> {
-                        (activity as  CharacterActivity).progressBar(true)
+                        (activity as CharacterActivity).progressBar(true)
                     }
                     Status.SUCCESS -> {
-                        (activity as  CharacterActivity).progressBar(false)
+                        (activity as CharacterActivity).progressBar(false)
                         characterAdapter.submitList(it.data)
                     }
                     Status.ERROR -> {
-                        (activity as  CharacterActivity).progressBar(false)
-                        PurchaseConfirmationDialogFragment().show(
-                            childFragmentManager,
-                            PurchaseConfirmationDialogFragment.TAG
-                        )
+                        (activity as CharacterActivity).progressBar(false)
+                        dialogError(it.message!!)
                     }
                 }
             }

@@ -22,6 +22,6 @@ interface CharacterDao {
     @Query("SELECT * FROM character_table WHERE id = :id")
     suspend fun findCharacterById(id: Int): Character?
 
-    @Query("SELECT COUNT(*) FROM character_table")
-    fun checkIsNull(): LiveData<Int>
+    @Query("SELECT COUNT(id) FROM character_table")
+    suspend fun checkIsNull(): Int
 }

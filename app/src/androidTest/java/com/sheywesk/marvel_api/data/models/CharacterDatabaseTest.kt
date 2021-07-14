@@ -21,7 +21,7 @@ class CharacterDataBaseTest {
     private lateinit var databaseTest: CharacterDatabase
 
     @Before
-    fun createDb() {
+    fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         databaseTest = Room.inMemoryDatabaseBuilder(
             context, CharacterDatabase::class.java
@@ -31,7 +31,7 @@ class CharacterDataBaseTest {
 
     @After
     @Throws(IOException::class)
-    fun closeDb() {
+    fun tearDown() {
         databaseTest.close()
     }
 
@@ -45,11 +45,9 @@ class CharacterDataBaseTest {
             false,
             Image("adadad", "jpg"),
 
-        )
-
+            )
         characterDao.save(character)
         val byId = characterDao.findCharacterById(0)
         assertThat(byId).isEqualTo(character)
-
     }
 }

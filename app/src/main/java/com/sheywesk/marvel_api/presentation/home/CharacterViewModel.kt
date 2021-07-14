@@ -1,4 +1,5 @@
 package com.sheywesk.marvel_api.presentation.home
+
 import androidx.lifecycle.*
 import com.sheywesk.marvel_api.data.models.Character
 import com.sheywesk.marvel_api.data.repository.ICharacterRepository

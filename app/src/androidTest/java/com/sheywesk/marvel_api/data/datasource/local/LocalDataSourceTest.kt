@@ -24,7 +24,7 @@ class LocalDataSourceTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     @Before
-    fun createDb() {
+    fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room.inMemoryDatabaseBuilder(
             context, CharacterDatabase::class.java
@@ -33,7 +33,7 @@ class LocalDataSourceTest {
     }
 
     @After
-    fun closeDb() {
+    fun tearDown() {
         database.close()
     }
 
@@ -53,7 +53,6 @@ class LocalDataSourceTest {
 
     @Test
     fun updateFavorite() = runBlocking {
-
         val character = Character(
             0,
             "teste1", "teste1",

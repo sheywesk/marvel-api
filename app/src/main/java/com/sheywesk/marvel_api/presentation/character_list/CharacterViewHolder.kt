@@ -45,7 +45,7 @@ class CharacterViewHolder(private val item: CharacterItemBinding) :
                     )
                 )
             }
-            infoCard.favorite.setOnClickListener{
+            infoCard.favorite.setOnClickListener {
                 onFavoriteClick(character)
             }
         }

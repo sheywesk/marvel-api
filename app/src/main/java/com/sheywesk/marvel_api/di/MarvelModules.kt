@@ -38,9 +38,9 @@ val databaseModules = module {
 }
 val dataModules = module {
     single { MarvelService() }
-    single <ILocalDataSource>{ LocalDatasource(get(),androidApplication()) }
-    single <IRemoteDataSource>{ RemoteDatasource(get(),androidApplication()) }
-    single <ICharacterRepository> { CharacterRepository(get(),androidApplication(),get()) }
+    single<ILocalDataSource> { LocalDatasource(get(), androidApplication()) }
+    single<IRemoteDataSource> { RemoteDatasource(get(), androidApplication()) }
+    single<ICharacterRepository> { CharacterRepository(get(), androidApplication(), get()) }
 }
 val presentationModule = module {
     viewModel { CharacterViewModel(get()) }
